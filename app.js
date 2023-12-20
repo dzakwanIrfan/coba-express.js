@@ -1,9 +1,34 @@
 const express = require('express');
+var expressLayouts = require('express-ejs-layouts');
 const app = express();
 const port = 3000;
 
+// gunakan ejs
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
+
 app.get('/', (req, res) => {
-  res.sendFile('./index.html', {root: __dirname});
+  // res.sendFile('./index.html', {root: __dirname});
+  const mahasiswa = [
+    {
+      nama: 'Malika Azra Permata',
+      email: 'malika@gmail.com'
+    },
+    {
+      nama: 'Dzakwan Irfan Ramdhani',
+      email: 'dzakwan@gmail.com'
+    },
+    {
+      nama: 'Jeje',
+      email: 'jeje@gmail.com'
+    }
+  ];
+  res.render('index', {
+    nama: 'Dzakwan Irfan',
+    judul: 'Halaman Home',
+    mahasiswa,
+    layout: 'layouts/main'
+  });
 });
 
 app.get('/product/:id', (req, res) => {
@@ -11,11 +36,19 @@ app.get('/product/:id', (req, res) => {
 })
 
 app.get('/about', (req, res) => {
-  res.sendFile('./about.html', {root: __dirname});
+  // res.sendFile('./about.html', {root: __dirname});
+  res.render('about', {
+    judul: 'Halaman About',
+    layout: 'layouts/main'
+  });
 });
 
 app.get('/contact', (req, res) => {
-  res.sendFile('./contact.html', {root: __dirname});
+  // res.sendFile('./contact.html', {root: __dirname});
+  res.render('contact', {
+    judul: 'Halaman Contact',
+    layout: 'layouts/main'
+  });
 });
 
 app.use('/', (req, res) => {
